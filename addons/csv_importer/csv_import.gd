@@ -169,6 +169,13 @@ func _import( source_file: String, save_path: String,
     # DEBUG
     print( rows )
 
+    # Remove any potential trailing empty rows by checking the size and content
+    # of the last line
+    if ( !rows.is_empty() && rows.back().size() == 1 && rows.back()[0] == "" ):
+        rows.pop_back()
+    # DEBUG
+    print( rows )
+
     # Setup the resource
     var data : CSVData = preload( "csv_data.gd" ).new()
 
@@ -258,7 +265,7 @@ func _import( source_file: String, save_path: String,
                     value = new_arr
                 # Finally store
                 dict[ name ] = value
-            # Debug
+            # DEBUG
             print( dict )
             # Append it to our dictionary
             data.records.append( dict )
@@ -269,6 +276,9 @@ func _import( source_file: String, save_path: String,
         data.is_dictionaries = false
         data.records = rows
 
+    # DEBUG
+    print( "The data stored is: ", data.records )
+
     # Save the resource
     var filename : String = save_path + "." + _get_save_extension()
     #print( filename )
@@ -278,7 +288,7 @@ func _import( source_file: String, save_path: String,
     return err
 
 
-## Helper function to determine if a string is a float. Basically copies the c++
+## Helper function to determine if a string is a float. Basically copies the C++
 ## implementation for string.is_valid_float(), but also adds a "," (comma) as a valid
 ## delimiter
 func _is_str_valid_float( str: String ) -> bool:
