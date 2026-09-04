@@ -168,8 +168,6 @@ func _import( source_file: String, save_path: String,
                 rows.append( line )
     # Close the file
     file.close()
-    # DEBUG
-    print( rows )
 
     # Setup the resource
     var data : CSVData = preload( "csv_data.gd" ).new()
@@ -260,8 +258,6 @@ func _import( source_file: String, save_path: String,
                     value = new_arr
                 # Finally store
                 dict[ name ] = value
-            # DEBUG
-            print( dict )
             # Append it to our dictionary
             data.records.append( dict )
 
@@ -270,9 +266,6 @@ func _import( source_file: String, save_path: String,
         # The data stored is a simple array
         data.is_dictionaries = false
         data.records = rows
-
-    # DEBUG
-    print( "The data stored is: ", data.records )
 
     # Save the resource
     var filename : String = save_path + "." + _get_save_extension()
