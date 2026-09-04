@@ -163,16 +163,11 @@ func _import( source_file: String, save_path: String,
         # Get the current line split into each field, based on  the specified
         # delimiter and add it to the array
         var line : PackedStringArray = file.get_csv_line( delim )
-        rows.append( line )
+        # Skip empty lines
+        if ( !line.is_empty() && ( line.size() >= 1 ) && ( line[0] != "" ) ):
+                rows.append( line )
     # Close the file
     file.close()
-    # DEBUG
-    print( rows )
-
-    # Remove any potential trailing empty rows by checking the size and content
-    # of the last line
-    if ( !rows.is_empty() && rows.back().size() == 1 && rows.back()[0] == "" ):
-        rows.pop_back()
     # DEBUG
     print( rows )
 
